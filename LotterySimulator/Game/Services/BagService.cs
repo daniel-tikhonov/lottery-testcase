@@ -44,7 +44,7 @@ namespace LotterySimulator.Game.Services
         {
             
             await bag.Shuffle(_shufflerSettings.Value, ct);
-            return bag.Get(await _randomizer.RandomizeInt(0, bag.BallsCount - 1, ct));
+            return bag.Get(await _randomizer.RandomizeInt(0, bag.BallsCount, ct));
         }
     }
 }

@@ -22,16 +22,16 @@ namespace LotterySimulator.Game.Models
         /// <param name="shuffler">Shuffler used for shuffling bag</param>
         public BagModel(IShuffler shuffler) {
             _shuffler = shuffler;
-            Balls = new List<BallModel>();
+            _balls = new List<BallModel>();
         }
         /// <summary>
         /// All balls in bag
         /// </summary>
-        private List<BallModel> Balls { get; set; }
+        private List<BallModel> _balls { get; set; }
         /// <summary>
         /// Amount of balls in bag
         /// </summary>
-        public int BallsCount => Balls.Count;
+        public int BallsCount => _balls.Count;
         /// <summary>
         /// Add balls to bag builder method
         /// </summary>
@@ -42,7 +42,7 @@ namespace LotterySimulator.Game.Models
         {
             for (var i = 0; i < count; i++)
             {
-                Balls.Add(new BallModel(type));
+                _balls.Add(new BallModel(type));
             }
             return this;
         }
@@ -54,7 +54,7 @@ namespace LotterySimulator.Game.Models
         /// <returns></returns>
         public async Task Shuffle(ShuffleSettings settings, CancellationToken ct)
         {
-            Balls = (await _shuffler.Shuffle(Balls, settings, ct)).ToList();
+            _balls = (await _shuffler.Shuffle(_balls, settings, ct)).ToList();
         }
         /// <summary>
         /// Get ball from bag by index
@@ -63,7 +63,8 @@ namespace LotterySimulator.Game.Models
         /// <returns></returns>
         public BallModel Get(int index)
         {
-            return Balls[index];
+            return _balls[index];
         }
+        internal List<BallModel> Balls => _balls.ToList();
     }
 }
